@@ -6,12 +6,13 @@
 /*   By: fsanlavi <florent-pro@hotmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/18 21:36:11 by fsanlavi          #+#    #+#             */
-/*   Updated: 2015/07/18 23:24:38 by fsanlavi         ###   ########.fr       */
+/*   Updated: 2015/07/19 12:27:24 by fsanlavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "ft_lib.h"
 
 void	display_sudoku(int **sudoku);
 
@@ -25,11 +26,14 @@ int		*get_possible(int **sudoku, int line, int col)
 	int *possible;
 	int x;
 	int y;
-
+		
 	possible = (int *)malloc(sizeof(int) * 9);
 	x = 0;
 	while (x < 9)
-		possible[x] = 0;
+	{
+		possible[x] = 1;
+		x++;
+	}
 	x = 0;
 	while (x < 9)
 	{
@@ -46,6 +50,7 @@ int		*get_possible(int **sudoku, int line, int col)
 	}
 	x = 0;
 	y = 0;
+	
 	while (x < 3)
 	{
 		while (y < 3)
@@ -56,6 +61,7 @@ int		*get_possible(int **sudoku, int line, int col)
 		}
 		x++;
 	}
+	
 	return (possible);
 }
 
@@ -66,6 +72,9 @@ int		solve_cell(int **sudoku, int line, int col)
 	int c;
 	int l;
 
+	//if(sudoku[line][col] != 0)
+	//	return (0);
+
 	possible = get_possible(sudoku, line, col);
 	i = 0;
 	c = 0;
@@ -73,15 +82,19 @@ int		solve_cell(int **sudoku, int line, int col)
 	{
 		if (possible[i] == 1)
 		{
-			l = possible[i];
+			l = i + 1;
 			c++;
 		}
 		i++;
 	}
 	free(possible);
 	if (c == 1)
+	{
+		printf("changed cell %d;%d from %d to %d\n", line, col, sudoku[line][col], l);
 		sudoku[line][col] = l;
-	return (c);
+		return (1);
+	}
+	return (0);
 }
 
 void	solve(int **sudoku)
@@ -90,7 +103,6 @@ void	solve(int **sudoku)
 	int y;
 	int c;
 	
-	printf("solve()");
 	c = 1;
 	while (c > 0)
 	{
@@ -98,19 +110,16 @@ void	solve(int **sudoku)
 		x = 0;
 		while (x < 9)
 		{
-			printf("x loop");
 			y = 0;
 			while (y < 9)
 			{
-				printf("y loop");
 				c += solve_cell(sudoku, x, y);
 				y++;
 			}
 			x++;
 		}
-		printf("c=%d\n\n", c);
-		display_sudoku(sudoku);
-		printf("\n\n");
+		printf(" > total changed %d\n", c);
+		//display_sudoku(sudoku);
+		//ft_putstr("=================\n");
 	}
-
 }
