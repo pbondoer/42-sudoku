@@ -6,12 +6,12 @@
 /*   By: fsanlavi <florent-pro@hotmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/18 22:27:46 by fsanlavi          #+#    #+#             */
-/*   Updated: 2015/07/18 22:29:20 by fsanlavi         ###   ########.fr       */
+/*   Updated: 2015/07/19 18:53:30 by pbondoer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SUDOKU_H
 # define SUDOKU_H
 
-void	solve(int **sudoku);
+int		solve(int **sudoku, int val);
 #endif

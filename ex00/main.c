@@ -6,13 +6,12 @@
 /*   By: fsanlavi <florent-pro@hotmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/18 18:44:56 by fsanlavi          #+#    #+#             */
-/*   Updated: 2015/07/19 12:28:07 by fsanlavi         ###   ########.fr       */
+/*   Updated: 2015/07/19 18:53:16 by pbondoer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_lib.h"
 #include "sudoku.h"
-#include <stdio.h>
 
 void	display_sudoku(int **sudoku)
 {
@@ -25,7 +24,10 @@ void	display_sudoku(int **sudoku)
 		y = 0;
 		while (y < 9)
 		{
-			ft_putchar('0' + sudoku[x][y]);
+			if (sudoku[x][y] == 0)
+				ft_putchar('.');
+			else
+				ft_putchar('0' + sudoku[x][y]);
 			if (y != 8)
 				ft_putchar(' ');
 			y++;
@@ -37,9 +39,9 @@ void	display_sudoku(int **sudoku)
 
 int		**read_args(char **argv)
 {
-	int x;			// ligne
-	int y;			// colone
-	int **sudoku;	// tableau de int
+	int x;
+	int y;
+	int **sudoku;
 
 	sudoku = (int **)malloc(sizeof(int *) * 9);
 	x = 0;
@@ -71,18 +73,15 @@ int		main(int argc, char **argv)
 	if (argc == 10)
 	{
 		sudoku = read_args(&argv[1]);
-		printf("read_args()\n");
 		if (sudoku == NULL)
 		{
 			ft_putstr("Erreur\n");
 			return (160);
 		}
-		printf("===== START =====\n");
-		display_sudoku(sudoku);
-		printf("===== SOLVE =====\n");
-		solve(sudoku);
-		printf("solve(): done\n");
-		display_sudoku(sudoku);
+		if (solve(sudoku, 0))
+			display_sudoku(sudoku);
+		else
+			ft_putstr("Erreur\n");
 	}
 	else
 	{
