@@ -6,7 +6,7 @@
 /*   By: fsanlavi <florent-pro@hotmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/18 18:44:56 by fsanlavi          #+#    #+#             */
-/*   Updated: 2015/07/19 18:53:16 by pbondoer         ###   ########.fr       */
+/*   Updated: 2015/07/19 21:55:29 by pbondoer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,20 @@ int		main(int argc, char **argv)
 		if (sudoku == NULL)
 		{
 			ft_putstr("Erreur\n");
-			return (160);
+			return (1);
 		}
 		if (solve(sudoku, 0))
 			display_sudoku(sudoku);
 		else
+		{
 			ft_putstr("Erreur\n");
+			return (1);
+		}
 	}
 	else
 	{
 		ft_putstr("Erreur\n");
-		return (160);
+		return (1);
 	}
 	return (0);
 }
